@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "transportagr",
+    "slug": "transportagr",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "transportagr"
+}
