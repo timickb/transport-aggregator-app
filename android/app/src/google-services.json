@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "567820797159",
+    "project_id": "sacred-analyst-111608",
+    "storage_bucket": "sacred-analyst-111608.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:567820797159:android:fd6ce48b05528eb609ce42",
+        "android_client_info": {
+          "package_name": "com.is.transportagr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "567820797159-7c5d8d7meailrqrhvdkd936ovilg1jrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbyZQNh1O0FvFEdyBL7hG9SBDjZTMkWwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "567820797159-7c5d8d7meailrqrhvdkd936ovilg1jrt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

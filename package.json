@@ -6,19 +6,54 @@
     "start": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "build:tailwind": "tailwindcss --input input.css --output tailwind.css --no-autoprefixer && tailwind-rn",
+    "dev:tailwind": "concurrently \"tailwindcss --input input.css --output tailwind.css --no-autoprefixer --watch\" \"tailwind-rn --watch\""
   },
   "dependencies": {
+    "@expo/vector-icons": "^12.0.5",
+    "@react-native-async-storage/async-storage": "^1.17.4",
+    "@react-native-community/datetimepicker": "3.5.2",
+    "@react-navigation/drawer": "^6.1.8",
+    "@react-navigation/native": "^6.0.10",
+    "@react-navigation/stack": "^6.0.11",
+    "@types/axios": "^0.14.0",
+    "axios": "^0.25.0",
     "expo": "~44.0.2",
     "expo-splash-screen": "~0.14.1",
     "expo-status-bar": "~1.2.0",
+    "json-loader": "^0.5.7",
+    "mobx": "^6.4.0",
+    "mobx-react-lite": "^3.3.0",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.34",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-moment": "^1.1.1",
     "react-native": "0.64.3",
-    "react-native-web": "0.17.1"
+    "react-native-autocomplete-input": "^5.0.2",
+    "react-native-bouncy-checkbox": "^2.1.8",
+    "react-native-datepicker": "^1.7.2",
+    "react-native-dropdown-picker": "^5.2.3",
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-paper": "^4.11.1",
+    "react-native-reanimated": "~2.2.0",
+    "react-native-safe-area-context": "3.3.2",
+    "react-native-screens": "~3.8.0",
+    "react-native-toast-notifications": "^3.2.3",
+    "react-native-vector-icons": "^9.0.0",
+    "react-native-web": "0.17.1",
+    "tailwind-rn": "^4.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "@types/react": "~17.0.21",
+    "@types/react-native": "~0.64.12",
+    "concurrently": "^7.1.0",
+    "postcss": "^8.4.12",
+    "react-native-cli": "^2.0.1",
+    "tailwindcss": "^3.0.24",
+    "typescript": "~4.3.5"
   },
   "private": true
 }

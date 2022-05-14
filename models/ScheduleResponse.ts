@@ -1,0 +1,3 @@
+interface ScheduleResponse {
+    items: Flight[]
+}
