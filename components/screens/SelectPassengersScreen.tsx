@@ -1,9 +1,10 @@
 import React, {useState} from "react";
 import {View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity, Modal, TextInput} from "react-native";
-import {Button} from "react-native-paper";
 import colors from "../../assets/colors/colors";
-
-const seatSize = 32;
+import Button from "../ui/Button";
+// @ts-ignore
+import globalStyles from '../../assets/styles/global';
+import Field from "../ui/Field";
 
 
 const styles = StyleSheet.create({
@@ -23,16 +24,17 @@ const styles = StyleSheet.create({
         maxHeight: 100
     },
     popup: {
+        ...globalStyles.shadowed,
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-        padding: 10,
+        padding: 13,
         margin: 20,
         marginTop: 120,
-        maxHeight: 380,
+        maxHeight: 430,
         backgroundColor: 'white',
-        borderWidth: 1
+        borderWidth: 0
     },
     popupContent: {
         flex: 1,
@@ -85,14 +87,13 @@ const SelectPassengersScreen = ({route, navigation}) => {
                 {
                     passengers[i + 1] == undefined ?
                         (<Button
-                            mode="contained"
-                            onPress={() => openPopup(i + 1)}>
-                            Добавить
-                        </Button>)
+                            onPress={() => openPopup(i + 1)}
+                            text="Добавить"/>
+                        )
                         : (
                             <View style={{flexDirection: 'column'}}>
                                 <Text>{passengers[i + 1].surname + " " + passengers[i + 1].name}</Text>
-                                <Button mode="contained">Редактировать</Button>
+                                <Button text="Редактировать"/>
                             </View>
                         )
                 }
@@ -105,39 +106,41 @@ const SelectPassengersScreen = ({route, navigation}) => {
             <Modal visible={dialogVisible} transparent>
                 <View style={styles.popup}>
                     <View style={styles.popupContent}>
-                        <Text>Новый пассажир</Text>
-                        <TextInput
-                            style={styles.textInput}
+                        <Text style={{fontSize: 16}}>Новый пассажир</Text>
+                        <Field
                             placeholder="Фамилия"
-                            onChangeText={(text) => setPassenger({ ...passenger, ['surname']: text })}
+                            onChange={(text) => setPassenger({ ...passenger, ['surname']: text })}
                             value={passenger.surname}
                         />
-                        <TextInput
-                            style={styles.textInput}
+                        <Field
                             placeholder="Имя"
                             value={passenger.name}
-                            onChangeText={(text) => setPassenger({ ...passenger, ['name']: text })}
+                            onChange={(text) => setPassenger({ ...passenger, ['name']: text })}
                         />
-                        <TextInput
-                            style={styles.textInput}
+                        <Field
                             placeholder="Отчество"
-                            onChangeText={(text) => setPassenger({ ...passenger, ['secondName']: text })}
+                            onChange={(text) => setPassenger({ ...passenger, ['secondName']: text })}
                             value={passenger.secondName} />
-                        <TextInput
-                            style={styles.textInput}
+                        <Field
                             placeholder="Номер паспорта"
-                            onChangeText={(text) => setPassenger({ ...passenger, ['passport']: text })}
+                            onChange={(text) => setPassenger({ ...passenger, ['passport']: text })}
                             value={passenger.passport} />
-                        <Button mode="contained" onPress={() => addPassenger()}>Добавить</Button>
-                        <Button onPress={() => setDialogVisible(false)}>Отмена</Button>
+                        <Button onPress={() => addPassenger()} text="Добавить" />
+                        <Button
+                            onPress={() => setDialogVisible(false)}
+                            text="Отмена"
+                            color="transparent"
+                            textColor={colors.primary}
+                            hoverColor={colors.lightGray}/>
                     </View>
                 </View>
             </Modal>
             <ScrollView>
                 {rows}
             </ScrollView>
-            <Button mode="contained" onPress={() => navigation.navigate("SelectPaymentMethod", {price: seatsCount*500})}>
-                Продолжить</Button>
+            <Button
+                text="Продолжить"
+                onPress={() => navigation.navigate("SelectPaymentMethod", {price: seatsCount*500})} />
         </SafeAreaView>
     )
 }

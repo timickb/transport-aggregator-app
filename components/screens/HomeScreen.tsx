@@ -22,6 +22,8 @@ import Button from "../ui/Button";
 import {$api} from "../../http";
 import Preloader from "../modules/Preloader";
 import RouteService from "../../services/RouteService";
+import SchemaService from "../../services/SchemaService";
+import {AxiosResponse} from "axios";
 
 const filterIconSize = 22
 const msPerDay = 86400000;
@@ -137,6 +139,7 @@ const options = [
     }
 ]
 
+Icon.loadFont();
 const HomeScreen = ({navigation}) => {
     const [isLoading, setLoading] = useState(false)
     const [routeInfo, setRouteInfo] = useState({
@@ -213,14 +216,12 @@ const HomeScreen = ({navigation}) => {
                         </View>
                         <View style={localStyles.routeSelectorRight}>
                             <TextInput
-                                showSoftInputOnFocus={false}
                                 style={localStyles.textInput}
                                 placeholder='Откуда'
                                 onChangeText={(text) => setRouteInfoProp("routeSource", text)}
                                 value={routeInfo.routeSource}
                             />
                             <TextInput
-                                showSoftInputOnFocus={false}
                                 style={localStyles.textInput}
                                 placeholder='Куда'
                                 onChangeText={(text) => setRouteInfoProp("routeDest", text)}

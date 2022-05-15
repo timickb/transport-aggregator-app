@@ -64,14 +64,17 @@ const TicketOptionBlock = (item:Flight) => {
                     </View>
                 </View>
                 <Button
-                    title={item.price + " руб."}
+                    title={item.min_price + " руб."}
                     onPress={() => {
                         navigation.navigate("SeatChoice", item)
                     }}
                 />
             </View>
             <View style={styles.optionContainerRow}>
-                <Text style={{color: 'gray', fontSize: 10}}>Время в пути {item.duration}</Text>
+                <View>
+                    <Text style={{color: 'gray', fontSize: 10}}>Время в пути {item.route.duration}</Text>
+                    <Text style={{color: 'gray', fontSize: 10}}>на {item.vehicle.model_name}</Text>
+                </View>
             </View>
         </View>
     )

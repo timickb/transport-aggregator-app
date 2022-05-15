@@ -7,19 +7,24 @@ import AboutAppScreen from "../screens/AboutAppScreen";
 import OperatorsScreen from "../screens/OperatorsScreen";
 import FAQScreen from "../screens/FAQScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import {useWindowDimensions} from "react-native";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
+    const dimensions = useWindowDimensions();
     const screenOptions = {
         headerStyle: {
-            backgroundColor: Colors.primary
+            backgroundColor: Colors.primary,
+            drawerType: dimensions.width >= 768 ? 'permanent' : 'front',
+            overlayColor: 'transparent'
         },
         headerTintColor: 'white',
     }
     return (
         <Drawer.Navigator
             initialRouteName="MainStackNavigator"
+            drawerHideStatusBarOnOpen={true}
             drawerContent={props => <DrawerContent {...props} />}
             screenOptions={screenOptions}>
 

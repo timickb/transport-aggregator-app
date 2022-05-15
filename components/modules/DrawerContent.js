@@ -61,6 +61,8 @@ const styles = StyleSheet.create({
     }
 });
 
+Icon.loadFont();
+Feather.loadFont();
 const DrawerContent = (props) => {
     const {store} = useContext(Context);
     return (

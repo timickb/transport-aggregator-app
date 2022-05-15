@@ -2,7 +2,7 @@
 import {StyleSheet} from 'react-native';
 import Colors from "../colors/colors";
 
-module.exports = StyleSheet.create({
+export default StyleSheet.create({
     shadowed: {
         shadowColor: "#000",
         shadowOffset: {

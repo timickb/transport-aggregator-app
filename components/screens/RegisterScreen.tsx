@@ -1,14 +1,14 @@
 import React, {useContext, useState} from 'react';
 import {
     SafeAreaView,
-    TextInput,
     StyleSheet,
     Text, Alert,
 } from "react-native";
-import {Button, Checkbox} from "react-native-paper";
 import colors from "../../assets/colors/colors";
 import {Context} from "../../App";
 import {RegisterResponse} from "../../models/RegisterResponse";
+import Field from "../ui/Field";
+import Button from "../ui/Button";
 
 const styles = StyleSheet.create({
     container: {
@@ -61,28 +61,27 @@ const RegisterScreen = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <TextInput
+            <Field
                 placeholder="Эл. почта"
-                style={styles.textInput}
-                onChangeText={(text) => handleChangeData("email", text)}/>
-            <TextInput
+                value={userData.email}
+                onChange={(text) => handleChangeData("email", text)}/>
+            <Field
+                isSecure={true}
                 placeholder="Пароль"
-                style={styles.textInput}
-                onChangeText={(text) => handleChangeData("password", text)}
+                value={userData.password}
+                onChange={(text) => handleChangeData("password", text)}
             />
-            <TextInput
+            <Field
+                isSecure={true}
                 placeholder="Повторите пароль"
-                style={styles.textInput}
-                onChangeText={(text) => handleChangeData("cPassword", text)}
+                value={userData.cPassword}
+                onChange={(text) => handleChangeData("cPassword", text)}
 
             />
             <Text style={{height: 100}}>{infoText}</Text>
             <Button
-                mode="contained"
-                color={colors.secondary}
-                onPress={async () => handleRegister()}>
-                Зарегистрироваться
-            </Button>
+                onPress={async () => handleRegister()}
+                text="Зарегистрироваться"/>
         </SafeAreaView>
     )
 }

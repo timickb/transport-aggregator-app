@@ -24,12 +24,12 @@ const Button: FC<IButton> = ({
             onPress={onPress}
             underlayColor={hoverColor}
             style={{
-                borderRadius: 10,
+                borderRadius: 12,
                 backgroundColor: color,
-                padding: 8,
-                margin: 3,
+                padding: 15,
+                margin: 5,
                 alignItems: 'center',
-                maxHeight: 40
+                maxHeight: 50
             }}>
             <Text style={{color: textColor}}>{text}</Text>
         </TouchableHighlight>

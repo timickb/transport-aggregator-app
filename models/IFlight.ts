@@ -3,4 +3,6 @@ interface Flight {
     route: Route
     vehicle: Vehicle
     company: Company
+    schema?: Schema
+    min_price?: number
 }

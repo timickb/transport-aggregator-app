@@ -69,11 +69,35 @@ const styles = StyleSheet.create({
 })
 
 const SeatChoiceScreen = ({route, navigation}) => {
-    const ticket = route.params;
+    const ticket: Flight = route.params;
 
-    const rowsCount = 12
-    const seatsInRowCount = 4
-    const aisleAfterSeat = 2
+    // Create 2D array for schema
+    let rowsCount:number = 0;
+    let seatsInRowCount:number = 0;
+    ticket.schema.seats.forEach((seat) => {
+        if (seat.rowLocation > rowsCount) {
+            rowsCount = seat.rowLocation;
+        }
+        if (seat.columnLocation > seatsInRowCount) {
+            seatsInRowCount = seat.columnLocation;
+        }
+    });
+    let seatsParsed = new Array(rowsCount).fill(0).map(() => new Array(seatsInRowCount).fill(0));
+
+    ticket.schema.seats.forEach((seat) => {
+        try {
+            seatsParsed[seat.rowLocation][seat.columnLocation] = seat;
+        } catch(e) {
+
+        }
+    });
+
+    // Detect aisle location
+    let aisleAfterSeat = ticket.schema.passages[0].nextSeatsRow - 1;
+    if (ticket.schema.passages[0].details === "right") {
+        aisleAfterSeat = rowsCount - aisleAfterSeat - 1;
+    }
+
     const [seatSelected, setSeatSelected] =
         useState(Array.from({length: rowsCount * seatsInRowCount}, () => false))
     const [seatsCount, setSeatsCount] = useState(0);
@@ -122,19 +146,22 @@ const SeatChoiceScreen = ({route, navigation}) => {
                     <View style={{margin: 10}}>
                         <Text style={{fontSize: 18, fontWeight: 'bold'}}>Тип автобуса:</Text>
                         <Text style={{fontSize: 16}}>
-                            Автобус {rowsCount * seatsInRowCount} мест
+                            {ticket.vehicle.model_name}
+                        </Text>
+                        <Text style={{fontSize: 16}}>
+                            Возраст: {new Date().getFullYear() - ticket.vehicle.production_year} лет
                         </Text>
 
                         <View style={styles.horizontalSep}/>
 
-                        <Text>{ticket.price} руб.</Text>
+                        <Text>Место от {ticket.min_price} руб.</Text>
 
                         <View style={styles.horizontalSep}/>
 
-                        <Text>{ticket.operatorName}</Text>
+                        <Text>Компания: {ticket.company.legal_name}</Text>
                     </View>
                     <View style={{flex: 1, flexDirection: 'column', alignItems: 'center'}}>
-                        <Text style={styles.busModelText}>Model</Text>
+                        <Text style={styles.busModelText}>{ticket.vehicle.model_name}</Text>
                         <View style={styles.bus}>
                             {seatMap}
                         </View>
@@ -143,7 +170,7 @@ const SeatChoiceScreen = ({route, navigation}) => {
             </View>
             <View style={styles.priceBlock}>
                 <Text>Выбрано {seatsCount} мест</Text>
-                <Text style={{fontColor: 'orange'}}>{seatsCount * 500} РУБ.</Text>
+                <Text>{seatsCount * ticket.min_price} РУБ.</Text>
             </View>
             <Button
                 color={colors.primary}

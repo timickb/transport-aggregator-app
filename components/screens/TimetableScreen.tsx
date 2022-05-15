@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useState} from "react";
 import {
     View,
@@ -13,6 +13,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import TicketOptionBlock from "../modules/TicketOptionBlock";
 import Moment from "moment";
 import {getReadableDate} from "../../Utils";
+import {AxiosResponse} from "axios";
+import SchemaService from "../../services/SchemaService";
 
 const styles = StyleSheet.create({
     routeContainer: {
@@ -141,13 +143,30 @@ const sampleData = [
     },
 ]
 
-
 const TimetableScreen = ({route, navigation}) => {
     const [data, setData] = useState<Flight[]>(route.params);
-
-    console.log(data[0].departure_date);
-
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        const getFlightSchema = async (flight : Flight) => {
+            const vehicleId = flight.vehicle.vehicle_id;
+            return await SchemaService.getSchema(vehicleId);
+        }
+        data.forEach((flight) => {
+           getFlightSchema(flight)
+               .then(res => {
+                   flight.schema = res.data;
+               })
+               .finally(() => {
+                   flight.min_price = 999999;
+                   flight.schema.seats.forEach((seat) => {
+                       if (seat.cost < flight.min_price) {
+                           flight.min_price = seat.cost;
+                       }
+                   });
+               });
+        });
+    }, [data]);
 
     const [sortingValue, setSortingValue] = useState("byDuration");
     const [sortingItems, setSortingItems] = useState([
@@ -160,11 +179,12 @@ const TimetableScreen = ({route, navigation}) => {
     const sortData = () => {
         setIsLoading(true);
         if (sortingValue === 'byDeparture') {
-            setData(data.sort((a, b) => a.departTime.localeCompare(b.departure_date)));
+            setData(data.sort((a, b) => 0));
         } else if (sortingValue === 'byDuration') {
-            setData(data.sort((a, b) => a.duration.localeCompare(b.route.duration)));
+            setData(data.sort((a, b) => a.route.duration.localeCompare(b.route.duration)));
         } else if (sortingValue === 'byPrice') {
-            setData(data.sort((a, b) => a.price.localeCompare(parseInt(b.price))));
+            setData(data.sort((a, b) =>
+                a.min_price > b.min_price ? b.min_price : a.min_price));
         }
         return data;
     }

@@ -1,11 +1,11 @@
-import React, {FC, useContext, useEffect, useState} from 'react';
+import React, {FC, useContext, useEffect, useRef, useState} from 'react';
 import {
     SafeAreaView,
     TextInput,
     StyleSheet,
     Text,
     ImageBackground,
-    View, Alert, Modal
+    View, Alert, Modal, Animated
 } from "react-native";
 import colors from "../../assets/colors/colors";
 import {Context} from '../../App';
@@ -13,7 +13,7 @@ import {LoginResponse} from "../../models/LoginResponse";
 import Button from "../ui/Button";
 import Field from "../ui/Field";
 // @ts-ignore
-import globalStyles from '../../assets/styles/global'
+import globalStyles from '../../assets/styles/global';
 
 const styles = StyleSheet.create({
     container: {
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 20,
         marginTop: 150,
-        maxHeight: 230,
+        maxHeight: 250,
         backgroundColor: 'white',
         borderWidth: 0
     },
@@ -106,9 +106,8 @@ const LoginScreen = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-
             <Modal visible={dialogVisible} transparent>
-                <View style={styles.popup}>
+                <Animated.View style={{...styles.popup}}>
                     <View style={styles.popupContent}>
                         <Text style={{fontSize: 17, padding: 10}}>Воостановление пароля</Text>
                         <Field
@@ -125,7 +124,7 @@ const LoginScreen = ({navigation}) => {
                             onPress={() => setDialogVisible(false)}
                         />
                     </View>
-                </View>
+                </Animated.View>
             </Modal>
 
             <ImageBackground
