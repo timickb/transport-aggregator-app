@@ -1,4 +1,4 @@
-import React, {FC, useContext, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {
     SafeAreaView,
     TextInput,
@@ -8,7 +8,7 @@ import {
     TouchableHighlight,
     View
 } from "react-native";
-import {Avatar, Button, Caption, Checkbox, Title} from "react-native-paper";
+import {Button} from "react-native-paper";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {Context} from '../../../App';
 

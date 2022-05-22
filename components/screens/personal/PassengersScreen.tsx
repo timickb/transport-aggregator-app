@@ -1,21 +1,20 @@
 import React, {FC, useContext} from 'react';
 import {
     SafeAreaView,
-    TextInput,
     StyleSheet,
     Text,
-    ImageBackground,
-    TouchableHighlight,
     View
 } from "react-native";
-import {Avatar, Button, Caption, Checkbox, Title} from "react-native-paper";
+import {Caption, Title} from "react-native-paper";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {Context} from '../../../App';
+import Button from "../../ui/Button";
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column'
+        flexDirection: 'column',
+        justifyContent: 'space-between'
     },
     textInput: {
         fontSize: 19,
@@ -62,14 +61,13 @@ const PassengersScreen = ({navigation}) => {
                 <Caption>+7 (999) 777-11-11</Caption>
                 <Caption>Паспорт 7500 785000</Caption>
                 <View style={{flex: 1, flexDirection: 'row'}}>
-                    <Button mode="contained" style={{maxHeight: 40}}>Редактировать</Button>
-                    <Button mode="contained" style={{maxHeight: 40, marginLeft: 5}}>Удалить</Button>
+                    <Button text="Редактировать" />
+                    <Button text="Удалить" />
                 </View>
             </View>
             <Button
-                mode="contained"
-                style={{marginTop: 'auto'}}
-                onPress={() => navigation.navigate("CreatePassenger")}>Добавить пассажира</Button>
+                text="Добавить пассажира"
+                onPress={() => navigation.navigate("CreatePassenger")} />
         </SafeAreaView>
     )
 }

@@ -6,11 +6,7 @@ import {
     Avatar,
     Title,
     Caption,
-    Paragraph,
     Drawer,
-    Text,
-    TouchableRipple,
-    Switch
 } from 'react-native-paper';
 import {DrawerItem, DrawerContentScrollView} from '@react-navigation/drawer'
 import {Context} from "../../App";
@@ -76,7 +72,7 @@ const DrawerContent = (props) => {
                                     <TouchableOpacity onPress={() =>
                                         props.navigation.navigate("Login", {screen: "Profile"})}>
                                         <View style={{flexDirection: 'row', marginTop: 15}}>
-                                            <Avatar.Image size={52}/>
+                                            <Avatar.Image size={52} source={require('../../assets/images/avatar.jpg')}/>
                                             <View style={{marginLeft: 15, flexDirection: 'column'}}>
                                                 <Title style={styles.title}>{store.user.email}</Title>
                                                 <Caption style={styles.caption}>Пользователь</Caption>

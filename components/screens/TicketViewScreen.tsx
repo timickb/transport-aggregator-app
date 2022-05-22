@@ -3,20 +3,12 @@ import {Image, SafeAreaView, StyleSheet, View} from "react-native";
 import TicketView from "../modules/TicketView";
 import {Title} from "react-native-paper";
 
-const styles = StyleSheet.create({
-    ticket: {
-        backgroundColor: 'white',
-        borderRadius: 20,
-        borderWidth: 1
-    }
-});
-
 const TicketViewScreen = ({route, navigation}) => {
     const ticket = {
         source: 'Москва',
-        destination: 'Владимир',
-        departure: '09:30',
-        arrival: '12:30'
+        destination: 'Калуга',
+        departure: '18:30',
+        arrival: '23:15'
     }
     return (
         <SafeAreaView>

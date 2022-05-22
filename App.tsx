@@ -17,7 +17,11 @@ export const Context = createContext({
 const App = () => {
     const {store} = useContext(Context);
 
+    // @ts-ignore
     useEffect(async () => {
+        console.log("Effect");
+        const res = await fetch('https://google.com');
+        console.log(res);
         if (await AsyncStorage.getItem('token')) {
             await store.refreshToken();
         }

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {SafeAreaView, StyleSheet, TouchableOpacity, View} from "react-native";
 import {Button, Title} from "react-native-paper";
 
 const styles = StyleSheet.create({
@@ -49,7 +49,7 @@ const SelectPaymentMethodScreen = ({route, navigation}) => {
 
     return (
         <SafeAreaView>
-            <View styles={styles.methodsList}>
+            <View style={styles.methodsList}>
                 <TouchableOpacity onPress={() => selectGoogle()}>
                     {googleSelected ?
                         (<View style={styles.methodBlockSelected}>

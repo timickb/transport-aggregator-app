@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity, Modal, TextInput} from "react-native";
 import colors from "../../assets/colors/colors";
 import Button from "../ui/Button";
 // @ts-ignore
 import globalStyles from '../../assets/styles/global';
 import Field from "../ui/Field";
+import {Context} from "../../App";
 
 
 const styles = StyleSheet.create({
@@ -51,6 +52,7 @@ const styles = StyleSheet.create({
 })
 
 const SelectPassengersScreen = ({route, navigation}) => {
+    const {store} = useContext(Context);
     const emptyPassenger = {
         'name': '',
         'surname': '',
@@ -75,6 +77,16 @@ const SelectPassengersScreen = ({route, navigation}) => {
         console.log(passengers);
     }
 
+    const selectExisting = () => {
+
+    }
+
+    const seats = {
+        0: 14,
+        1: 16,
+        2: 17
+    }
+
     const handleChangeData = (prop, text) => {
         setPassenger({ ...passenger, [prop]: text });
     };
@@ -82,7 +94,7 @@ const SelectPassengersScreen = ({route, navigation}) => {
     let rows = [];
     for (let i = 0; i < seatsCount; ++i) {
         rows.push(<View style={styles.block}>
-            <Text>Место {i + 1}</Text>
+            <Text>Место {seats[i]}</Text>
             <View>
                 {
                     passengers[i + 1] == undefined ?
@@ -126,6 +138,11 @@ const SelectPassengersScreen = ({route, navigation}) => {
                             onChange={(text) => setPassenger({ ...passenger, ['passport']: text })}
                             value={passenger.passport} />
                         <Button onPress={() => addPassenger()} text="Добавить" />
+                        {
+                            store.isAuth
+                                ? <Button onPress={() => selectExisting()} text="Выбрать из существующих" />
+                                : <></>
+                        }
                         <Button
                             onPress={() => setDialogVisible(false)}
                             text="Отмена"
@@ -140,7 +157,7 @@ const SelectPassengersScreen = ({route, navigation}) => {
             </ScrollView>
             <Button
                 text="Продолжить"
-                onPress={() => navigation.navigate("SelectPaymentMethod", {price: seatsCount*500})} />
+                onPress={() => navigation.navigate("CardData", {price: seatsCount*500})} />
         </SafeAreaView>
     )
 }

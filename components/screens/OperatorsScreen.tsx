@@ -1,9 +1,6 @@
-import {Button, FlatList, SafeAreaView, StyleSheet, Text, View} from "react-native";
-import {Title} from "react-native-paper";
+import {Alert, FlatList, SafeAreaView, StyleSheet, Text, View} from "react-native";
 import React, {useEffect, useState} from 'react';
-import $carrierApi, {$api} from '../../http';
-import axios from "axios";
-import TicketOptionBlock from "../modules/TicketOptionBlock";
+import {$api} from '../../http';
 import CompanyListBlock from "../modules/CompanyListBlock";
 
 const styles = StyleSheet.create({
@@ -72,7 +69,7 @@ const styles = StyleSheet.create({
 });
 
 const OperatorsScreen = () => {
-    const [companies, setCompanies] = useState([]);
+    const [companies, setCompanies] = useState<Company[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -84,8 +81,26 @@ const OperatorsScreen = () => {
         $api.get("companies").then(res => {
             setCompanies(res.data.companies);
             console.log(res.data);
-        }).catch(err => console.log(err))
-            .finally(() => setIsLoading(false));
+        })
+            .catch(err => {
+                console.log(err);
+                Alert.alert(null, "Не удалось загрузить данные", [{text: "OK"}]);
+            })
+            .finally(() => {
+                setIsLoading(false);
+                setCompanies([...companies, {
+                    id: 0,
+                    code: 'SU',
+                    name: "IP Mironov",
+                    legal_name: "ИП Миронов",
+                    address: "Москва",
+                    phone: "999",
+                    website: "mironov-carrier.su",
+                    description: "Автобусные перевозки",
+                    notes: "",
+                    is_active: true
+                }])
+            });
     }
 
     return (
@@ -95,7 +110,7 @@ const OperatorsScreen = () => {
                 data={companies}
                 extraData={companies}
                 renderItem={({item}) => (<CompanyListBlock key={item.id} {...item} />)}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.id.toString()}
                 onRefresh={() => getData()}
                 refreshing={isLoading}
                 ListEmptyComponent={(

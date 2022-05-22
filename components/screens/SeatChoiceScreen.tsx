@@ -155,6 +155,10 @@ const SeatChoiceScreen = ({route, navigation}) => {
                         <View style={styles.horizontalSep}/>
 
                         <Text>Место от {ticket.min_price} руб.</Text>
+                        <Text>{
+                            ticket.schema.passages[0].details === "left" ?
+                                "Проход слева" : "Проход справа"
+                        }</Text>
 
                         <View style={styles.horizontalSep}/>
 

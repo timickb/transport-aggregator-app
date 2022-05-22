@@ -2,8 +2,6 @@ import React from 'react';
 import {useState} from 'react';
 import Colors from '../../assets/colors/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
-import {MaterialCommunityIcons} from '@expo/vector-icons';
 import DatePicker from 'react-native-datepicker';
 import {ActivityIndicator, Alert, Platform} from "react-native";
 // @ts-ignore
@@ -160,14 +158,18 @@ const HomeScreen = ({navigation}) => {
             .then(res => {
                 if (res.data.items.length === 0) {
                     Alert.alert(null,
-                        "Билеты не найдены. Попробуйте выбрать другую дату",
+                            "Произошла ошибка. Проверьте соединение с сетью.",
                         [{text: 'OK', style: 'cancel'}])
                 } else {
                     console.log(res.data);
                     navigation.navigate('Timetable', res.data.items);
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err);
+                Alert.alert(null, "Произошла ошибка. Проверьте соединение с сетью",
+                    [{text: 'OK', style: 'cancel'}]);
+            })
             .finally(() => {
                 setLoading(false);
             });
@@ -288,6 +290,7 @@ const HomeScreen = ({navigation}) => {
                             <Text style={{top: 10, fontWeight: 'bold', fontSize: 16}}>Фильтры</Text>
                             <Button
                                 text='Сбросить'
+                                textColor='white'
                                 onPress={() => dropFilters()}/>
                         </View>
 

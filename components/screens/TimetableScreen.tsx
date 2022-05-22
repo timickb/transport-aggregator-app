@@ -5,16 +5,13 @@ import {
     StyleSheet,
     Text,
     ImageBackground,
-    FlatList, Picker
+    FlatList, Picker, Alert
 } from "react-native";
-import DropDownPicker from 'react-native-dropdown-picker';
-import colors from "../../assets/colors/colors";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import TicketOptionBlock from "../modules/TicketOptionBlock";
-import Moment from "moment";
 import {getReadableDate} from "../../Utils";
-import {AxiosResponse} from "axios";
 import SchemaService from "../../services/SchemaService";
+import {AxiosResponse} from "axios";
 
 const styles = StyleSheet.create({
     routeContainer: {
@@ -143,30 +140,48 @@ const sampleData = [
     },
 ]
 
-const TimetableScreen = ({route, navigation}) => {
+Icon.loadFont();
+const TimetableScreen = ({route}) => {
     const [data, setData] = useState<Flight[]>(route.params);
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        const getFlightSchema = async (flight : Flight) => {
+    const getData = async () => {
+        const getFlightSchema = async (flight: Flight): Promise<AxiosResponse<Schema>> => {
             const vehicleId = flight.vehicle.vehicle_id;
             return await SchemaService.getSchema(vehicleId);
         }
-        data.forEach((flight) => {
-           getFlightSchema(flight)
-               .then(res => {
-                   flight.schema = res.data;
-               })
-               .finally(() => {
-                   flight.min_price = 999999;
-                   flight.schema.seats.forEach((seat) => {
-                       if (seat.cost < flight.min_price) {
-                           flight.min_price = seat.cost;
-                       }
-                   });
-               });
-        });
-    }, [data]);
+        setIsLoading(true);
+        for (const flight of data) {
+            getFlightSchema(flight)
+                .then(response => {
+                    flight.schema = response.data;
+                    flight.company.legal_name = "ИП Миронов"
+                    flight.min_price = 1000000;
+                    flight.schema.seats.forEach((seat) => {
+                        if (seat.cost < flight.min_price) {
+                            flight.min_price = seat.cost;
+                        }
+                    });
+                })
+                .catch(e => {
+                    console.error(e);
+                    Alert.alert(null, "Ошибка загрузки", [
+                        {
+                            text: "OK",
+                            style: "cancel"
+                        }
+                    ]);
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
+        }
+    };
+
+    // @ts-ignore
+    useEffect(async () => {
+        await getData();
+    }, []);
 
     const [sortingValue, setSortingValue] = useState("byDuration");
     const [sortingItems, setSortingItems] = useState([
@@ -187,17 +202,6 @@ const TimetableScreen = ({route, navigation}) => {
                 a.min_price > b.min_price ? b.min_price : a.min_price));
         }
         return data;
-    }
-
-    const getData = () => {
-        setIsLoading(true);
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(res => res.json()).then(() => {
-        })
-            .finally(() => {
-                sortData();
-                setIsLoading(false);
-            })
     }
 
     return (

@@ -25,4 +25,17 @@ const getReadableTime = (date: Date) : string => {
     return ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2);
 }
 
-export {getReadableMonth, getReadableDate, getReadableTime}
+const getArrivalDate = (departureDate: Date, duration: string) : Date => {
+    const parts = duration.split(':');
+    const hours = parseInt(parts[0]);
+    const minutes = parseInt(parts[1]);
+    const seconds = parseInt(parts[2]);
+
+    departureDate.setHours(departureDate.getHours() + hours);
+    departureDate.setMinutes(departureDate.getMinutes() + minutes);
+    departureDate.setSeconds(departureDate.getSeconds() + seconds);
+
+    return departureDate;
+}
+
+export {getReadableMonth, getReadableDate, getReadableTime, getArrivalDate}

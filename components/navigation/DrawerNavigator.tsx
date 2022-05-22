@@ -24,7 +24,6 @@ const DrawerNavigator = () => {
     return (
         <Drawer.Navigator
             initialRouteName="MainStackNavigator"
-            drawerHideStatusBarOnOpen={true}
             drawerContent={props => <DrawerContent {...props} />}
             screenOptions={screenOptions}>
 

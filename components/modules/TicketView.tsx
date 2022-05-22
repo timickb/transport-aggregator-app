@@ -1,5 +1,6 @@
 import React from "react";
-import {SafeAreaView, Text, StyleSheet, View, Image, Button} from "react-native";
+import {SafeAreaView, Text, StyleSheet, View, Image} from "react-native";
+import Button from "../ui/Button";
 
 const styles = StyleSheet.create({
     ticket: {
@@ -24,6 +25,18 @@ const styles = StyleSheet.create({
 });
 
 const TicketView = (ticket) => {
+    const sendToEmail = () => {
+        // TODO: send to email
+    }
+
+    const downloadPDF = () => {
+        // TODO: download PDF
+    }
+
+    const generateQR = () => {
+        // TODO: QR generating
+    }
+
     return (
         <View style={styles.ticket}>
             <View style={styles.routeView}>
@@ -32,14 +45,14 @@ const TicketView = (ticket) => {
                     source={require('../../assets/images/sample-qr.png')}
                     style={styles.qr}
                 />
-                <Text>Отправление: 29 марта 2022 г., 09:30</Text>
-                <Text>Прибытие: 29 марта 2022 г., 13:00</Text>
-                <Text>Места 01, 02 (левый борт)</Text>
+                <Text>Отправление: 20 мая 2022 г., 18:30</Text>
+                <Text>Прибытие: 20 мая 2022 г., 23:15</Text>
+                <Text>Места 14, 16, 17</Text>
                 <View style={{padding: 20}} />
                 <View style={{flexDirection: 'row'}}>
-                    <Button title="Отправить на почту" />
+                    <Button text="Отправить на почту" onPress={() => sendToEmail()}/>
                     <View style={{padding: 10}} />
-                    <Button title="Скачать в PDF" />
+                    <Button text="Скачать в PDF" onPress={() => downloadPDF()} />
                 </View>
             </View>
         </View>

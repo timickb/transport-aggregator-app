@@ -2,7 +2,7 @@ import {Button, Text, View, StyleSheet} from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import React from "react";
 import {useNavigation} from "@react-navigation/native";
-import {getReadableDate, getReadableTime} from "../../Utils";
+import {getReadableDate, getReadableTime, getArrivalDate} from "../../Utils";
 
 const styles = StyleSheet.create({
     optionContainer: {
@@ -31,9 +31,12 @@ const TicketOptionBlock = (item:Flight) => {
     const navigation = useNavigation();
 
     const departureTime:string = getReadableTime(new Date(item.departure_date));
-    const arrivalTime:string = getReadableTime(new Date(item.departure_date));
     const departureDate:string = getReadableDate(new Date(item.departure_date), false);
-    const arrivalDate:string = getReadableDate(new Date(item.departure_date), false);
+
+    const arrivalDateTime:Date = getArrivalDate(new Date(item.departure_date), item.route.duration);
+
+    const arrivalTime:string = getReadableTime(new Date(arrivalDateTime));
+    const arrivalDate:string = getReadableDate(new Date(arrivalDateTime), false);
 
     return (
         <View style={styles.optionContainer}>
@@ -46,7 +49,7 @@ const TicketOptionBlock = (item:Flight) => {
                 </View>
                 <View style={styles.optionContainerRating}>
                     <Icon name="star" color="orange" size={21}/>
-                    <Text style={{fontWeight: 'bold', fontSize: 16}}>Нет отзывов</Text>
+                    <Text style={{fontSize: 16}}>Нет отзывов</Text>
                 </View>
             </View>
             <View style={styles.optionContainerRow}>
@@ -66,6 +69,7 @@ const TicketOptionBlock = (item:Flight) => {
                 <Button
                     title={item.min_price + " руб."}
                     onPress={() => {
+                        // @ts-ignore
                         navigation.navigate("SeatChoice", item)
                     }}
                 />
