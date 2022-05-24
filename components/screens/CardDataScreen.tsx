@@ -38,28 +38,31 @@ const styles = StyleSheet.create({
 })
 
 const CardDataScreen = ({route, navigation}) => {
+    const {seatsSelected, ticket} = route.params;
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.card}>
                 <View style={styles.cardRow}>
                     <View style={styles.cardItem}>
-                        <TextInput style={styles.textInput} placeholder="Номер карты (16 цифр)" />
+                        <TextInput style={styles.textInput} placeholder="Номер карты (16 цифр)"/>
                     </View>
                     <View style={styles.cardItem}>
-                        <TextInput style={styles.textInput} placeholder="ММ" />
-                        <TextInput style={styles.textInput} placeholder="ГГГГ" />
+                        <TextInput style={styles.textInput} placeholder="ММ"/>
+                        <TextInput style={styles.textInput} placeholder="ГГГГ"/>
                     </View>
                 </View>
                 <View style={styles.cardRow}>
                     <View style={styles.cardItem}>
-                        <TextInput style={styles.textInput} placeholder="Имя владельца" />
+                        <TextInput style={styles.textInput} placeholder="Имя владельца"/>
                     </View>
                     <View style={styles.cardItem}>
-                        <TextInput style={styles.textInput} placeholder="CVV/CVC" />
+                        <TextInput style={styles.textInput} placeholder="CVV/CVC"/>
                     </View>
                 </View>
             </View>
-            <Button title="Оплатить" onPress={() => navigation.navigate("TicketView")}>
+            <Button title="Оплатить"
+                    onPress={() => navigation.navigate("TicketView", {seatsSelected: seatsSelected, ticket: ticket})}>
                 Оплатить</Button>
         </SafeAreaView>
     )

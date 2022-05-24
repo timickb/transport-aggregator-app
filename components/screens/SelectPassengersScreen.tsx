@@ -59,11 +59,13 @@ const SelectPassengersScreen = ({route, navigation}) => {
         'secondName': '',
         'passport': '',
     };
-    const { seatsCount } = route.params;
+    const { seatsSelected, ticket } = route.params;
     const [ passengers, setPassengers ] = useState({});
     const [ dialogVisible, setDialogVisible ] = useState(false);
     const [ currentSeat, setCurrentSeat ] = useState(0);
-    const [ passenger, setPassenger ] = useState(emptyPassenger)
+    const [ passenger, setPassenger ] = useState(emptyPassenger);
+
+    console.log(seatsSelected);
 
     const openPopup = seatId => {
         setPassenger(emptyPassenger);
@@ -81,20 +83,15 @@ const SelectPassengersScreen = ({route, navigation}) => {
 
     }
 
-    const seats = {
-        0: 14,
-        1: 16,
-        2: 17
-    }
-
     const handleChangeData = (prop, text) => {
         setPassenger({ ...passenger, [prop]: text });
     };
 
     let rows = [];
-    for (let i = 0; i < seatsCount; ++i) {
+    for (let i = 0; i < seatsSelected.length; ++i) {
+        if (!seatsSelected[i]) continue;
         rows.push(<View style={styles.block}>
-            <Text>Место {seats[i]}</Text>
+            <Text>Место {i + 1}</Text>
             <View>
                 {
                     passengers[i + 1] == undefined ?
@@ -157,7 +154,7 @@ const SelectPassengersScreen = ({route, navigation}) => {
             </ScrollView>
             <Button
                 text="Продолжить"
-                onPress={() => navigation.navigate("CardData", {price: seatsCount*500})} />
+                onPress={() => navigation.navigate("CardData", {seatsSelected: seatsSelected, ticket: ticket})} />
         </SafeAreaView>
     )
 }

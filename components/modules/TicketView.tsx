@@ -1,6 +1,7 @@
 import React from "react";
 import {SafeAreaView, Text, StyleSheet, View, Image} from "react-native";
 import Button from "../ui/Button";
+import {getReadableDate, getArrivalDate, getReadableMonth, getReadableTime} from "../../Utils";
 
 const styles = StyleSheet.create({
     ticket: {
@@ -24,7 +25,8 @@ const styles = StyleSheet.create({
     }
 });
 
-const TicketView = (ticket) => {
+const TicketView = ({seatsSelected, ticket}) => {
+    const arrivalDate = getArrivalDate(new Date(ticket.departure_date), ticket.route.duration);
     const sendToEmail = () => {
         // TODO: send to email
     }
@@ -37,17 +39,30 @@ const TicketView = (ticket) => {
         // TODO: QR generating
     }
 
+    let seatsString = "";
+    for (let i = 0; i < seatsSelected.length; ++i) {
+        if (seatsSelected[i]) {
+            seatsString += (i + 1) + ", ";
+        }
+    }
+    seatsString = seatsString.substr(0, seatsString.length - 2);
+
     return (
         <View style={styles.ticket}>
             <View style={styles.routeView}>
-                <Text style={{fontSize: 21}}>{ticket.source} - {ticket.destination}</Text>
+                <Text style={{fontSize: 21}}>
+                    {ticket.route.departure_city} - {ticket.route.arrival_city}
+                </Text>
                 <Image
                     source={require('../../assets/images/sample-qr.png')}
                     style={styles.qr}
                 />
-                <Text>Отправление: 20 мая 2022 г., 18:30</Text>
-                <Text>Прибытие: 20 мая 2022 г., 23:15</Text>
-                <Text>Места 14, 16, 17</Text>
+                <Text>Отправление: {getReadableDate(new Date(ticket.departure_date))} г.,
+                    {getReadableTime(new Date(ticket.departure_date))}</Text>
+                <Text>
+                    Прибытие: {getReadableDate(arrivalDate)}., {getReadableTime(arrivalDate)}
+                </Text>
+                <Text>Места {seatsString}</Text>
                 <View style={{padding: 20}} />
                 <View style={{flexDirection: 'row'}}>
                     <Button text="Отправить на почту" onPress={() => sendToEmail()}/>

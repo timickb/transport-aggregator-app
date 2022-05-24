@@ -158,7 +158,7 @@ const HomeScreen = ({navigation}) => {
             .then(res => {
                 if (res.data.items.length === 0) {
                     Alert.alert(null,
-                            "Произошла ошибка. Проверьте соединение с сетью.",
+                            "Рейсы не найдены. Попробуйте изменить дату",
                         [{text: 'OK', style: 'cancel'}])
                 } else {
                     console.log(res.data);
@@ -209,7 +209,7 @@ const HomeScreen = ({navigation}) => {
     return (
         <SafeAreaView style={{flex: 1}}>
             <ImageBackground style={localStyles.backgroundContainer}
-                             source={require('../../assets/images/road.png')}
+                             source={require('../../assets/images/road.jpg')}
                              resizeMode="cover">
                 <View style={localStyles.topBackgroundContainer}>
                     <View style={globalStyles.roundedBlock}>

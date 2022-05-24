@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity} from "react-native";
+import {View, Text, StyleSheet, SafeAreaView, TouchableOpacity} from "react-native";
 import {Button} from "react-native-paper";
 import colors from "../../assets/colors/colors";
 
@@ -180,7 +180,7 @@ const SeatChoiceScreen = ({route, navigation}) => {
                 color={colors.primary}
                 disabled={seatsCount == 0}
                 mode="contained"
-                onPress={() => navigation.navigate("SelectPassengers", {seatsCount: seatsCount})}>
+                onPress={() => navigation.navigate("SelectPassengers", {seatsSelected: seatSelected, ticket: ticket})}>
                 Продолжить
             </Button>
         </SafeAreaView>

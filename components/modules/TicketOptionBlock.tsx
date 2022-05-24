@@ -37,12 +37,11 @@ const TicketOptionBlock = (item:Flight) => {
 
     const arrivalTime:string = getReadableTime(new Date(arrivalDateTime));
     const arrivalDate:string = getReadableDate(new Date(arrivalDateTime), false);
-
     return (
         <View style={styles.optionContainer}>
             <View style={styles.optionContainerRow}>
                 <View>
-                    <Text style={{fontSize: 18}}>{item.company.legal_name}</Text>
+                    <Text style={{fontSize: 18}}>ИП Миронов</Text>
                     <Text style={{color: 'gray', fontSize: 10}}>
                         {item.route.departure_city} - {item.route.arrival_city}
                     </Text>
@@ -67,7 +66,7 @@ const TicketOptionBlock = (item:Flight) => {
                     </View>
                 </View>
                 <Button
-                    title={item.min_price + " руб."}
+                    title={25 + " руб."}
                     onPress={() => {
                         // @ts-ignore
                         navigation.navigate("SeatChoice", item)

@@ -4,13 +4,11 @@ import {
     TextInput,
     StyleSheet,
     Text,
-    ImageBackground,
-    TouchableHighlight,
-    View
 } from "react-native";
-import {Button} from "react-native-paper";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {Context} from '../../../App';
+import Button from "../../ui/Button";
+import Field from "../../ui/Field";
 
 const styles = StyleSheet.create({
     container: {
@@ -69,47 +67,40 @@ const PassengersScreen = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <TextInput
-                style={styles.textInput}
+            <Field
                 placeholder="Фамилия"
                 value={passenger.surname}
-                onChangeText={(text) => handleChangeData("surname", text)}
+                onChange={(text) => handleChangeData("surname", text)}
             />
-            <TextInput
-                style={styles.textInput}
+            <Field
                 placeholder="Имя"
                 value={passenger.name}
-                onChangeText={(text) => handleChangeData("name", text)}
-
+                onChange={(text) => handleChangeData("name", text)}
             />
-            <TextInput
-                style={styles.textInput}
+            <Field
                 placeholder="Отчество"
                 value={passenger.lastname}
-                onChangeText={(text) => handleChangeData("lastname", text)}
+                onChange={(text) => handleChangeData("lastname", text)}
 
             />
-            <TextInput
-                style={styles.textInput}
+            <Field
                 placeholder="Номер телефона"
                 value={passenger.phone}
-                onChangeText={(text) => handleChangeData("phone", text)}
+                onChange={(text) => handleChangeData("phone", text)}
 
             />
-            <TextInput
-                style={styles.textInput}
+            <Field
                 placeholder="Паспорт"
                 value={passenger.passport}
-                onChangeText={(text) => handleChangeData("passport", text)}
+                onChange={(text) => handleChangeData("passport", text)}
 
             />
-            <TextInput
-                style={styles.textInput}
+            <Field
                 placeholder="Электронная почта"
                 value={passenger.email}
-                onChangeText={(text) => handleChangeData("email", text)}
+                onChange={(text) => handleChangeData("email", text)}
             />
-            <Button mode="contained" style={{marginTop: 'auto'}}>Создать</Button>
+            <Button text="Создать" />
         </SafeAreaView>
     )
 }

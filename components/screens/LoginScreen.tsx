@@ -5,7 +5,7 @@ import {
     StyleSheet,
     Text,
     ImageBackground,
-    View, Alert, Modal, Animated
+    View, Alert, Modal, Animated, ActivityIndicator
 } from "react-native";
 import colors from "../../assets/colors/colors";
 import {Context} from '../../App';
@@ -63,6 +63,7 @@ const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState<string>('');
     const [restoringEmail, setRestoringEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const handlePasswordReset = async () => {
         let text = "Пользователя с таким адресом не существует.";
@@ -88,6 +89,7 @@ const LoginScreen = ({navigation}) => {
     }
 
     const handleLogin = async () => {
+        setIsLoading(true);
         const result: LoginResponse = await store.login(email, password);
         if (result?.message == "OK.") {
             navigation.reset({
@@ -102,6 +104,7 @@ const LoginScreen = ({navigation}) => {
                     style: "cancel"
                 }]);
         }
+        setIsLoading(false);
     }
 
     return (
@@ -129,7 +132,7 @@ const LoginScreen = ({navigation}) => {
 
             <ImageBackground
                 style={styles.image}
-                source={require('../../assets/images/road.png')}
+                source={require('../../assets/images/road.jpg')}
                 resizeMode="cover"
                 blurRadius={2}
                 width={200}/>
@@ -145,10 +148,8 @@ const LoginScreen = ({navigation}) => {
                     onPress={() => setDialogVisible(true)}/>
             </View>
 
-            <Button
-                onPress={async () => handleLogin()}
-                text="Войти"
-            />
+            <Button text={isLoading ? <ActivityIndicator size="small" color="white"/>
+                : "Найти"} onPress={async () => handleLogin()}/>
             <Button
                 text="Регистрация"
                 color='transparent'

@@ -194,7 +194,8 @@ const TimetableScreen = ({route}) => {
     const sortData = () => {
         setIsLoading(true);
         if (sortingValue === 'byDeparture') {
-            setData(data.sort((a, b) => 0));
+            // @ts-ignore
+            setData(data.sort((b, a) => b.departure_date - a.departure_date));
         } else if (sortingValue === 'byDuration') {
             setData(data.sort((a, b) => a.route.duration.localeCompare(b.route.duration)));
         } else if (sortingValue === 'byPrice') {
@@ -208,7 +209,7 @@ const TimetableScreen = ({route}) => {
         <View style={{flex: 1}}>
             <ImageBackground
                 style={styles.routeContainer}
-                source={require('../../assets/images/road.png')}
+                source={require('../../assets/images/road.jpg')}
                 blurRadius={5}>
                 <>
                     <Text style={styles.routeContainerText}>
